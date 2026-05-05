@@ -1,0 +1,21 @@
+<section class="reviews">
+    <h1>Reviews</h1>
+  
+    <div class="review-card" *ngFor="let review of reviews">
+      <h3>{{ review.book }}</h3>
+      <p class="author">Autor: {{ review.author }}</p>
+      <p class="content">{{ review.content }}</p>
+      <p class="username">User: {{ review.username }}</p>
+      <div class="likes-containter"><i 
+        *ngIf="review.my_like; else noLike" 
+        class="bi bi-heart-fill liked">
+      </i>
+      <ng-template #noLike>
+        <i class="bi bi-heart not-liked"></i>
+      </ng-template>
+        <span class="n_likes">{{ review.likes }}</span>
+      </div>
+      <p class="created_at">created at: {{review.created_at}}</p>
+    </div>
+</section>
+  

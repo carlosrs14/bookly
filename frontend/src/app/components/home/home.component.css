@@ -1,0 +1,78 @@
+.reviews {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+i {
+    cursor: pointer;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #012030;
+    font-size: 2rem;
+    border-bottom: 2px solid #45C4B0;
+    padding-bottom: 0.5rem;
+}
+  
+.review-card {
+    background-color: #DAFDBA;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    transition: transform 0.2s ease;
+}
+
+.review-card:hover {
+    transform: scale(1.01);
+}
+  
+.author, .username, .created_at {
+    font-style: italic;
+    color: #012030;
+    font-size: 0.9rem;
+  
+    margin-bottom: 0.5rem;
+}
+  
+.content {
+    color: #012030;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+}
+
+#likes-containter {
+    gap: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 0.5rem;
+}
+
+.liked {
+    color: #E63946;
+    font-size: 1.3rem;
+    cursor: pointer;
+}
+  
+.not-liked {
+    color: #ccc;
+    font-size: 1.3rem;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+  
+.not-liked:hover {
+    color: #E63946;
+}
+  
+.n_likes {
+    margin: 0;
+    padding: 0;
+    font-weight: bold;
+    color: #012030;
+    line-height: 1;
+}
+  
