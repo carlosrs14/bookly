@@ -3,10 +3,8 @@ import { LayoutComponent } from './components/layout/layout.component';
 
 @Component({
   selector: 'app-root',
+  standalone: true,
   imports: [LayoutComponent],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  template: '<app-layout />',
 })
-export class AppComponent {
-  title = 'bookly-fe';
-}
+export class AppComponent {}

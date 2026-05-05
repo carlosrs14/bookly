@@ -1,22 +1,13 @@
-import { RouterModule, Routes } from '@angular/router';
-import { RegisterComponent } from './components/register/register.component';
-import { LoginComponent } from './components/login/login.component';
-import { NgModule } from '@angular/core';
-import { HomeComponent } from './components/home/home.component';
-import { BooksComponent } from './components/books/books.component';
+import { Routes } from '@angular/router';
+import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
-    {path: '', component: HomeComponent},
-    {path: 'login', component: LoginComponent},
-    {path: 'register', component: RegisterComponent},
-    {path: 'books', component: BooksComponent},
-    // insert publish route
-    { path: '**', redirectTo: '' }
-
+  { path: '', loadComponent: () => import('./components/feed/feed.component').then(m => m.FeedComponent) },
+  { path: 'books', loadComponent: () => import('./components/books/books.component').then(m => m.BooksComponent) },
+  { path: 'books/:id', loadComponent: () => import('./components/book-detail/book-detail.component').then(m => m.BookDetailComponent) },
+  { path: 'login', loadComponent: () => import('./components/login/login.component').then(m => m.LoginComponent) },
+  { path: 'register', loadComponent: () => import('./components/register/register.component').then(m => m.RegisterComponent) },
+  { path: 'favorites', loadComponent: () => import('./components/favorites/favorites.component').then(m => m.FavoritesComponent), canActivate: [authGuard] },
+  { path: 'profile', loadComponent: () => import('./components/profile/profile.component').then(m => m.ProfileComponent), canActivate: [authGuard] },
+  { path: '**', redirectTo: '' },
 ];
-@NgModule({
-    imports: [RouterModule.forRoot(routes)],
-    exports: [RouterModule]
-})
-
-export class AppRoutingModule {}
