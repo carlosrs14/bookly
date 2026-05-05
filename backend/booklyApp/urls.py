@@ -1,9 +1,10 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from rest_framework_simplejwt.views import (TokenObtainPairView, TokenRefreshView)
-from booklyApp import views
+from backend.booklyApp import views
 
 router = DefaultRouter()
+
 # to admin
 router.register(r'gender', views.GenderViewSet, basename = 'gender')
 router.register(r'books', views.BookViewSet, basename = 'books')
