@@ -13,6 +13,9 @@ connection.ensure_connection()
 done
 echo "Database ready!"
 
+echo "Creating migrations..."
+python manage.py makemigrations booklyApp --noinput
+
 echo "Running migrations..."
 python manage.py migrate --noinput
 

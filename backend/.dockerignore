@@ -1,7 +1,10 @@
-__pycache__/
+.env
+__pycache__
 *.pyc
-*.pyo
-*.pyd
 env/
-*.env
-*.log
+venv/
+media/
+staticfiles/
+node_modules/
+dist/
+.angular/

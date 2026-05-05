@@ -6,10 +6,11 @@ from django.db.models import Count, Exists, OuterRef
 
 from ..serializers import ReviewSerializer
 from ..models import Review, Like, Favorite
+from ..pagination import FeedCursorPagination
 
 
 class FeedView(generics.ListAPIView):
-    """Public review feed with pagination (supports infinite scroll).
+    """Public review feed with cursor pagination (supports infinite scroll).
 
     Annotates each review with likes_count, comments_count, and
     per-user is_liked/is_favorited flags when authenticated.
@@ -17,13 +18,14 @@ class FeedView(generics.ListAPIView):
 
     serializer_class = ReviewSerializer
     permission_classes = [AllowAny]
+    pagination_class = FeedCursorPagination
 
     def get_queryset(self):
         queryset = Review.objects.select_related(
             "user", "user__profile", "book", "book__author"
         ).annotate(
-            likes_count=Count("likes"),
-            comments_count=Count("comments"),
+            likes_count=Count("likes", distinct=True),
+            comments_count=Count("comments", distinct=True),
         ).order_by("-created_at")
 
         # Add per-user flags if authenticated
