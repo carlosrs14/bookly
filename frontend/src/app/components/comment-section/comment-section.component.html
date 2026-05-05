@@ -1,0 +1,40 @@
+<div class="mt-3 pt-3 space-y-3">
+  @if (loading()) {
+    <div class="flex justify-center py-4">
+      <span class="loading loading-spinner loading-sm"></span>
+    </div>
+  } @else {
+    @for (comment of comments(); track comment.id) {
+      <div class="flex gap-3 p-3 rounded-lg bg-base-300/40 animate-fade-in-up">
+        <div class="avatar placeholder">
+          <div class="bg-secondary text-secondary-content rounded-full w-7">
+            <span class="text-xs font-bold">{{ comment.user.username.charAt(0).toUpperCase() }}</span>
+          </div>
+        </div>
+        <div class="flex-1">
+          <div class="flex items-center gap-2">
+            <span class="font-semibold text-xs">{{ comment.user.username }}</span>
+            <span class="text-xs opacity-40">{{ comment.created_at | date:'shortDate' }}</span>
+          </div>
+          <p class="text-sm opacity-80 mt-0.5">{{ comment.content }}</p>
+        </div>
+      </div>
+    } @empty {
+      <p class="text-center text-sm opacity-50 py-3">No comments yet. Be the first!</p>
+    }
+  }
+
+  <form class="join w-full" (ngSubmit)="submitComment()">
+    <input type="text"
+           [(ngModel)]="newComment"
+           name="comment"
+           placeholder="Write a comment..."
+           class="input input-bordered join-item input-sm flex-1"
+           required />
+    <button type="submit"
+            class="btn btn-primary btn-sm join-item"
+            [disabled]="!newComment().trim()">
+      Send
+    </button>
+  </form>
+</div>

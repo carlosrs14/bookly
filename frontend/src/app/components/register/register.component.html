@@ -1,0 +1,57 @@
+<div class="flex justify-center items-center min-h-[60vh] px-4">
+  <div class="card bg-base-200 border border-base-300 w-full max-w-md shadow-xl animate-fade-in-up">
+    <div class="card-body gap-5">
+
+      <div class="text-center">
+        <div class="text-4xl mb-2">✨</div>
+        <h1 class="text-xl font-heading font-bold">Join Bookly</h1>
+        <p class="text-sm opacity-60">Create your account and start sharing reviews</p>
+      </div>
+
+      <form (ngSubmit)="onRegister()" class="space-y-3">
+        <div class="form-control">
+          <label class="label"><span class="label-text">Username</span></label>
+          <input type="text" id="reg-username" [(ngModel)]="username" name="username"
+                 placeholder="Choose a username" class="input input-bordered w-full" required autocomplete="username" />
+        </div>
+
+        <div class="form-control">
+          <label class="label"><span class="label-text">Email</span></label>
+          <input type="email" id="reg-email" [(ngModel)]="email" name="email"
+                 placeholder="your&#64;email.com" class="input input-bordered w-full" required autocomplete="email" />
+        </div>
+
+        <div class="form-control">
+          <label class="label"><span class="label-text">Password</span></label>
+          <input type="password" id="reg-password" [(ngModel)]="password" name="password"
+                 placeholder="Min. 6 characters" class="input input-bordered w-full" required minlength="6" autocomplete="new-password" />
+        </div>
+
+        <div class="form-control">
+          <label class="label"><span class="label-text">Confirm Password</span></label>
+          <input type="password" id="reg-confirm" [(ngModel)]="confirmPassword" name="confirmPassword"
+                 placeholder="Repeat your password" class="input input-bordered w-full" required autocomplete="new-password" />
+        </div>
+
+        @if (error()) {
+          <div class="alert alert-error text-sm py-2">
+            <span>{{ error() }}</span>
+          </div>
+        }
+
+        <button type="submit" class="btn btn-primary w-full" [disabled]="loading()">
+          @if (loading()) {
+            <span class="loading loading-spinner loading-sm"></span> Creating account...
+          } @else {
+            Create Account
+          }
+        </button>
+      </form>
+
+      <p class="text-center text-sm opacity-60">
+        Already have an account?
+        <a routerLink="/login" class="link link-primary font-semibold">Sign in</a>
+      </p>
+    </div>
+  </div>
+</div>

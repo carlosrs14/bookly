@@ -1,0 +1,44 @@
+<div class="flex justify-center px-4 py-8">
+  <div class="card bg-base-200 border border-base-300 w-full max-w-md shadow-xl animate-fade-in-up">
+    <div class="card-body items-center text-center gap-4">
+
+      <!-- Avatar -->
+      <div class="avatar mb-2">
+        <div class="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+          @if (auth.currentUser()?.profile?.avatar) {
+            <img [src]="auth.currentUser()!.profile!.avatar" alt="avatar" />
+          } @else {
+            <div class="bg-primary text-primary-content flex items-center justify-center w-full h-full text-3xl font-bold">
+              {{ auth.currentUser()?.username?.charAt(0)?.toUpperCase() }}
+            </div>
+          }
+        </div>
+      </div>
+
+      <label for="avatar-upload" class="btn btn-ghost btn-sm gap-1">
+        📷 Change Avatar
+        <input type="file" id="avatar-upload" accept="image/*" (change)="onAvatarChange($event)" class="hidden" />
+      </label>
+
+      <!-- Info -->
+      <div>
+        <h1 class="text-xl font-heading font-bold">{{ auth.currentUser()?.username }}</h1>
+        <p class="text-sm opacity-60">{{ auth.currentUser()?.email }}</p>
+      </div>
+
+      @if (auth.currentUser()?.profile?.bio) {
+        <p class="text-sm opacity-70 bg-base-300 rounded-lg p-4 w-full">
+          {{ auth.currentUser()!.profile!.bio }}
+        </p>
+      }
+
+      @if (successMsg()) {
+        <div class="alert alert-success text-sm py-2">
+          <span>{{ successMsg() }}</span>
+        </div>
+      }
+
+      <button class="btn btn-outline btn-error w-full mt-2" (click)="auth.logout()">Sign Out</button>
+    </div>
+  </div>
+</div>

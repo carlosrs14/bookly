@@ -1,0 +1,49 @@
+<div>
+  <!-- Page header -->
+  <div class="text-center mb-8">
+    <h1 class="text-3xl font-heading font-extrabold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+      Review Feed
+    </h1>
+    <p class="text-sm opacity-60 mt-1">Discover what the community is reading and thinking</p>
+  </div>
+
+  <!-- Reviews list -->
+  @for (review of reviews(); track review.id) {
+    <app-review-card [review]="review" />
+  }
+
+  <!-- Skeleton loaders -->
+  @if (loading()) {
+    @for (i of [1, 2, 3]; track i) {
+      <div class="card bg-base-200 border border-base-300 mb-4 p-5">
+        <div class="flex gap-3 animate-pulse">
+          <div class="skeleton w-10 h-10 rounded-full shrink-0"></div>
+          <div class="flex-1 space-y-2">
+            <div class="skeleton h-3 w-28"></div>
+            <div class="skeleton h-16 w-full"></div>
+            <div class="skeleton h-3 w-40"></div>
+          </div>
+        </div>
+      </div>
+    }
+  }
+
+  <!-- End of feed -->
+  @if (!loading() && !hasMore() && reviews().length > 0) {
+    <div class="text-center py-8">
+      <p class="text-sm opacity-50">You've reached the end 🎉</p>
+    </div>
+  }
+
+  <!-- Empty state -->
+  @if (!loading() && reviews().length === 0) {
+    <div class="text-center py-16">
+      <div class="text-6xl mb-4">📖</div>
+      <h2 class="text-xl font-heading font-bold mb-2">No reviews yet</h2>
+      <p class="text-sm opacity-60">Be the first to share your thoughts on a book!</p>
+    </div>
+  }
+
+  <!-- Infinite scroll anchor -->
+  <div #scrollAnchor class="h-px"></div>
+</div>
