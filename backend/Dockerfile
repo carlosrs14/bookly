@@ -1,15 +1,20 @@
-FROM python:3.12-alpine
+FROM python:3.12-slim
 
 WORKDIR /app
 
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libpq-dev \
+    && rm -rf /var/lib/apt/lists/*
+
 COPY requirements.txt .
-
-RUN apk add --no-cache gcc musl-dev libffi-dev postgresql-dev
-
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-EXPOSE 8080
+RUN chmod +x entrypoint.sh
 
-CMD [ "python", "manage.py", "runserver", "0.0.0.0:8080"]
+RUN mkdir -p /app/media/covers /app/media/avatars
+
+EXPOSE 8000
+
+CMD ["./entrypoint.sh"]
