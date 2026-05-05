@@ -1,0 +1,78 @@
+<div class="card bg-base-200 border border-base-300 shadow-md mb-4 animate-fade-in-up hover:border-primary/30 transition-all duration-300">
+  <div class="card-body p-5 gap-3">
+
+    <!-- Header: user + rating -->
+    <div class="flex items-start justify-between">
+      <div class="flex items-center gap-3">
+        @if (review().user.avatar) {
+          <div class="avatar">
+            <div class="w-10 rounded-full"><img [src]="review().user.avatar" /></div>
+          </div>
+        } @else {
+          <div class="avatar placeholder">
+            <div class="bg-primary text-primary-content rounded-full w-10">
+              <span class="text-sm font-bold">{{ review().user.username.charAt(0).toUpperCase() }}</span>
+            </div>
+          </div>
+        }
+        <div>
+          <p class="font-semibold text-sm">{{ review().user.username }}</p>
+          <p class="text-xs opacity-50">{{ review().created_at | date:'mediumDate' }}</p>
+        </div>
+      </div>
+
+      @if (review().rating) {
+        <div class="rating rating-sm">
+          @for (star of stars; track $index) {
+            <input type="radio" class="mask mask-star-2 bg-warning" [checked]="$index < review().rating!" disabled />
+          }
+        </div>
+      }
+    </div>
+
+    <!-- Book info -->
+    <a [routerLink]="['/books', review().book_id]"
+       class="flex items-center gap-3 p-3 rounded-lg bg-base-300/50 hover:bg-base-300 transition-colors">
+      @if (review().book_cover) {
+        <img [src]="review().book_cover" class="w-10 h-14 rounded object-cover" alt="" />
+      }
+      <div>
+        <p class="font-heading font-semibold text-sm">{{ review().book_title }}</p>
+        <p class="text-xs opacity-60">by {{ review().book_author }}</p>
+      </div>
+    </a>
+
+    <!-- Content -->
+    <p class="text-sm leading-relaxed">{{ review().content }}</p>
+
+    <!-- Actions -->
+    <div class="flex gap-2 pt-2 border-t border-base-300">
+      <button class="btn btn-ghost btn-sm gap-1"
+              [class.text-error]="liked()"
+              (click)="onToggleLike()"
+              [disabled]="!auth.isAuthenticated()">
+        {{ liked() ? '❤️' : '🤍' }}
+        <span class="text-xs">{{ likesCount() }}</span>
+      </button>
+
+      <button class="btn btn-ghost btn-sm gap-1"
+              (click)="showComments.set(!showComments())"
+              [disabled]="!auth.isAuthenticated()">
+        💬 <span class="text-xs">{{ review().comments_count }}</span>
+      </button>
+
+      <button class="btn btn-ghost btn-sm gap-1"
+              [class.text-primary]="favorited()"
+              (click)="onToggleFavorite()"
+              [disabled]="!auth.isAuthenticated()">
+        {{ favorited() ? '🔖' : '📑' }}
+        <span class="text-xs">{{ favorited() ? 'Saved' : 'Save' }}</span>
+      </button>
+    </div>
+
+    <!-- Comments -->
+    @if (showComments()) {
+      <app-comment-section [reviewId]="review().id" />
+    }
+  </div>
+</div>
